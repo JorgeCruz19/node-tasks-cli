@@ -5,14 +5,14 @@ const { saveInformation, readInformation } = require('./helpers/saveFile');
 const Tareas = require('./models/tareas');
 
 const main = async () => {
+  let opt = '';
+  const tareas = new Tareas();
 
   const taskDB = readInformation();
   if (taskDB) {
-    
+    tareas.loadTaskFromArray(taskDB)
   }
 
-  let opt = '';
-  const tareas = new Tareas();
     do {
       opt = await inquirerMenu();
 
@@ -22,11 +22,17 @@ const main = async () => {
           tareas.crearTarea(desc)
         break;
         case '2':
-          console.log(tareas.listArr);
+          tareas.toListCompleted();
+        break;
+        case '3':
+          tareas.toListPendingsOrCompletes(true);
+        break;
+        case '4':
+          tareas.toListPendingsOrCompletes(false);
         break;
       }
 
-      /* saveInformation(tareas.listArr) */
+      saveInformation(tareas.listArr)
 
       await pause();
     } while (opt != '0'); 

@@ -32,7 +32,7 @@ const main = async () => {
         break;
         case '5':
           const ids = await showCheckList(tareas.listArr)
-          console.log(ids);
+          tareas.toggleCompleted(ids);
         break;
         case '6':
           const id = await listDeleteTask(tareas.listArr)
